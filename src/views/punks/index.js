@@ -98,41 +98,46 @@ const Punks = () => {
       </Box>
       <Box my={5}>
         <Container>
+          <Box mb={2} display="flex" justifyContent="flex-end">
+            <form onSubmit={submit}>
+              <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+                <InputLabel
+                  style={{ color: alpha("#fff", 0.5) }}
+                  htmlFor="standard-adornment-password"
+                >
+                  Buscar por dirección
+                </InputLabel>
+                <Input
+                  disabled={loading}
+                  error={submitted && !validAddress}
+                  id="standard-adornment-password"
+                  type="text"
+                  value={address ?? ""}
+                  onChange={handleAddressChange}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        disabled={loading}
+                        aria-label="submit address"
+                        type="submit"
+                      >
+                        <SearchIcon style={{ color: "#fff" }} />
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+                {submitted && !validAddress && (
+                  <FormHelperText style={{ color: alpha("#ff0000", 0.5) }}>
+                    Dirección inválida
+                  </FormHelperText>
+                )}
+              </FormControl>
+            </form>
+          </Box>
           {loading ? (
             <LoadingComponent punks />
           ) : (
             <>
-              <Box mb={2} display="flex" justifyContent="flex-end">
-                <form onSubmit={submit}>
-                  <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
-                    <InputLabel
-                      style={{ color: alpha("#fff", 0.5) }}
-                      htmlFor="standard-adornment-password"
-                    >
-                      Buscar por dirección
-                    </InputLabel>
-                    <Input
-                      error={submitted && !validAddress}
-                      id="standard-adornment-password"
-                      type="text"
-                      value={address ?? ""}
-                      onChange={handleAddressChange}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton aria-label="submit address" type="submit">
-                            <SearchIcon style={{ color: "#fff" }} />
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                    />
-                    {submitted && !validAddress && (
-                      <FormHelperText style={{ color: alpha("#ff0000", 0.5) }}>
-                        Dirección inválida
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-                </form>
-              </Box>
               <Grid container spacing={1}>
                 {punks.map(({ name, image, tokenId, owner }) => (
                   <Grid item xs={12} sm={6} md={4} key={tokenId}>
